@@ -1,6 +1,4 @@
 
-// import { Card, Typography, Grid } from "@mui/material";
-// import { Grid } from "@mui/material";
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,18 +11,29 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {SkipNextIcon} from '@mui/icons-material/SkipNext';
 import Grid from '@mui/material/Grid';
+import {Paper} from "@mui/material";
 
-export  default function Post({id, content}) {
-    const theme = useTheme();
+import { useState, useEffect } from "react"
+import { Button } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+
+
+export  default function Post({id, title, body, removePost}) {
+    // const theme = useTheme();
 
     return (
-      <Grid item xs={4}>
-        <Card>
-          <CardContent>
-          <Typography>#{id}</Typography>
-            <Typography>{content}</Typography>
-          </CardContent>
-        </Card>
-    </Grid>
+      <Grid key={id} xs={12}>
+        <Paper key={id} elevation={4}>
+
+          <Typography>Post #{id}</Typography>
+            <Button onClick={() => removePost(id)} variant="contained" color="error">
+              <CloseIcon />
+            </Button>
+
+          <Typography fontSize={14} fontFamily={"cursive"}>{title}</Typography>
+          <Typography fontSize={14} fontFamily={"cursive"}>{body}</Typography>
+
+        </Paper>
+      </Grid>
     )
 }

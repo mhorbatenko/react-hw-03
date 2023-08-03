@@ -7,14 +7,24 @@ import { Button } from "@mui/material";
 import Post from '@/components/post'
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import {Paper} from "@mui/material";
+
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 
 import uuidV4 from "@/app/utils/uuid";
 
-export default function ToDosCards() {
+
+export default function Posts() {
 
     const [posts, setPosts] = useState([])
+    const [agreement, SetAgreement] = useState(false)
+
 
     const getApiData = async () => {
         const response = await fetch(
@@ -40,32 +50,23 @@ export default function ToDosCards() {
         setPosts(updatedPosts)
     }
 
+    const handleClickOpen = () => {
+        SetAgreement(true);
+      };
+    
+      const handleClose = () => {
+        SetAgreement(false);
+      };
+
     return (
         <Grid container gap={2}>
-        <Grid item xs={3}>
-            <Paper elevation={4}>
+        <Grid item xs={12}>
                 <Button variant="contained" onClick={() => addPostHandler()}>Add Post<AddIcon></AddIcon></Button>
-            </Paper>
         </Grid>
             {
                 posts.map(
                     (post) => (
-                            <Grid key={post.id} xs={3}>
-                            <Paper key={post.id} elevation={4}>
-
-                            <Typography>Post #{post.id}</Typography>
-                            <Button
-                                onClick={() => removePost(post.id)}
-                                variant="contained"
-                                color="error">
-                                <CloseIcon />
-                            </Button>
-
-                            <Typography fontSize={14} fontFamily={"cursive"}>{post.title}</Typography>
-                            <Typography fontSize={14} fontFamily={"cursive"}>{post.body}</Typography>
-
-                            </Paper>
-                            </Grid>
+                        <Post id={post.id} body={post.body} title={post.title} removePost={removePost}/>
                     )
                 )
             }
