@@ -16,17 +16,36 @@ import {Paper} from "@mui/material";
 import { useState, useEffect } from "react"
 import { Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 export  default function Post({id, title, body, removePost}) {
-    // const theme = useTheme();
+
+    const [removeConfirm, setRemoveConfirm] = useState(false)
+
+    const handleRemoveConfirm = (id) => {
+      removePost(id)
+      handleClose();
+    };
+
+    const handleOpen = () => {
+      setRemoveConfirm(true)
+    }
+
+    const handleClose = () => {
+      setRemoveConfirm(false);
+    };
 
     return (
       <Grid key={id} xs={12}>
         <Paper key={id} elevation={4}>
 
           <Typography>Post #{id}</Typography>
-            <Button onClick={() => removePost(id)} variant="contained" color="error">
+            <Button onClick={() => handleOpen()} variant="contained" color="error">
               <CloseIcon />
             </Button>
 
@@ -34,6 +53,28 @@ export  default function Post({id, title, body, removePost}) {
           <Typography fontSize={14} fontFamily={"cursive"}>{body}</Typography>
 
         </Paper>
+            <Dialog
+            open={removeConfirm}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Use Google's location service?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Let Google help apps determine location. This means sending anonymous
+                location data to Google, even when no apps are running.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={() => handleRemoveConfirm(id)} autoFocus>
+                Agree
+              </Button>
+            </DialogActions>
+          </Dialog>
       </Grid>
     )
 }
