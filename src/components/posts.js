@@ -5,16 +5,23 @@ import { Button } from "@mui/material";
 import Post from '@/components/post'
 import AddIcon from '@mui/icons-material/Add';
 import uuidV4 from "@/app/utils/uuid";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function Posts() {
 
     const [posts, setPosts] = useState([])
 
+    const [isPostsLoading, setPostLoading] = useState(true)
+
     const getApiData = async () => {
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/posts?_limit=5"
-        ).then((response) => response.json());
+        ).then(
+            (response) => response.json()
+        ).then(
+            setPostLoading(false)
+        );
         setPosts(response);
       };
 
@@ -38,6 +45,7 @@ export default function Posts() {
         <Grid item xs={12}>
                 <Button variant="contained" onClick={() => addPostHandler()}>Add Post<AddIcon></AddIcon></Button>
         </Grid>
+            {isPostsLoading ? <CircularProgress/> : null}
             {
                 posts.map(
                     (post) => (
@@ -45,8 +53,6 @@ export default function Posts() {
                     )
                 )
             }
-
         </Grid>
-
         )
 }
