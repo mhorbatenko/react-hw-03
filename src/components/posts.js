@@ -16,7 +16,7 @@ export default function Posts() {
 
     const getApiData = async () => {
         const response = await fetch(
-          "https://jsonplaceholder.typicode.com/posts?_limit=5"
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
         ).then(
             (response) => response.json()
         ).then(
