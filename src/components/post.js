@@ -49,8 +49,9 @@ export  default function Post({id, title, body, removePost}) {
               <CloseIcon />
             </Button>
 
-          <Typography fontSize={14} fontFamily={"cursive"}>{title}</Typography>
-          <Typography fontSize={14} fontFamily={"cursive"}>{body}</Typography>
+          <Typography fontSize={14} fontFamily={"cursive"} contentEditable>{title}
+          </Typography>
+          <Typography fontSize={14} fontFamily={"cursive"} contentEditable>{body}</Typography>
 
         </Paper>
             <Dialog
@@ -60,7 +61,7 @@ export  default function Post({id, title, body, removePost}) {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Use Google's location service?"}
+              Please confirm removing post with id "{id}"?
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
